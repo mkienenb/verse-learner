@@ -1,0 +1,28 @@
+name: 'Run Continuous Integration'
+
+on:
+  push:
+
+jobs:
+  run-continous-integration:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v5
+
+    - name: Setup Java
+      uses: actions/setup-java@v5
+      with:
+        java-version: 21
+        distribution: 'corretto'
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+#        cache-encryption-key: ${{ inputs.gradle-cache-encryption-key }}
+        # This option is used to force a cache on a branch other than main
+        cache-read-only: false
+
+    - name: Verify tests pass
+      shell: bash
+      run: ./gradlew check
