@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.gamenet'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation('org.assertj:assertj-core:3.27.7')
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Manifest-Version': '1.0',
+                'Class-Path': configurations.runtimeClasspath.asPath,
+                'Main-Class': 'org.gamenet.application.VerseLearner.VerseLearner',
+                'Built-By': System.properties['user.name'],
+                'Built-Date': new Date().format('yyyy-MM-dd'), // Adjust date format as needed
+                'Implementation-Title': 'YourProjectName',
+                'Implementation-Version': version,
+                'Implementation-Vendor': 'YourVendorName',
+                'Specification-Title': 'YourProjectName',
+                'Specification-Version': version,
+                'Specification-Vendor': 'YourVendorName'
+        )
+    }
+}
